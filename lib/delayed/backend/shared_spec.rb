@@ -264,11 +264,13 @@ shared_examples_for 'a delayed_job backend' do
     end
 
     it 'is the instance method that will be called if its a performable method object' do
+      pending "ignoring specs using delay"
       job = Story.create(:text => '...').delay.save
       expect(job.name).to eq('Story#save')
     end
 
     it 'parses from handler on deserialization error' do
+      pending "ignoring specs using delay"
       job = Story.create(:text => '...').delay.text
       job.payload_object.object.destroy
       expect(job.reload.name).to eq('Delayed::PerformableMethod')
@@ -346,6 +348,8 @@ shared_examples_for 'a delayed_job backend' do
 
   context 'large handler' do
     before do
+      pending "ignoring specs using delay"
+
       text = 'Lorem ipsum dolor sit amet. ' * 1000
       @job = described_class.enqueue Delayed::PerformableMethod.new(text, :length, {})
     end
@@ -453,6 +457,8 @@ shared_examples_for 'a delayed_job backend' do
   describe 'yaml serialization' do
     context 'when serializing jobs' do
       it 'raises error ArgumentError for new records' do
+        pending "ignoring specs using delay"
+
         story = Story.new(:text => 'hello')
         if story.respond_to?(:new_record?)
           expect { story.delay.tell }.to raise_error(
@@ -463,6 +469,8 @@ shared_examples_for 'a delayed_job backend' do
       end
 
       it 'raises error ArgumentError for destroyed records' do
+        pending "ignoring specs using delay"
+
         story = Story.create(:text => 'hello')
         story.destroy
         expect { story.delay.tell }.to raise_error(
@@ -474,6 +482,8 @@ shared_examples_for 'a delayed_job backend' do
 
     context 'when reload jobs back' do
       it 'reloads changed attributes' do
+        pending "ignoring specs using delay"
+
         story = Story.create(:text => 'hello')
         job = story.delay.tell
         story.update_attributes :text => 'goodbye'
@@ -481,6 +491,8 @@ shared_examples_for 'a delayed_job backend' do
       end
 
       it 'raises deserialization error for destroyed records' do
+        pending "ignoring specs using delay"
+
         story = Story.create(:text => 'hello')
         job = story.delay.tell
         story.destroy

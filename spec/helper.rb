@@ -45,9 +45,6 @@ Delayed::Worker.backend = :test
 # Add this directory so the ActiveSupport autoloading works
 ActiveSupport::Dependencies.autoload_paths << File.dirname(__FILE__)
 
-# Add this to simulate Railtie initializer being executed
-ActionMailer::Base.extend(Delayed::DelayMail)
-
 # Used to test interactions between DJ and an ORM
 ActiveRecord::Base.establish_connection :adapter => 'sqlite3', :database => ':memory:'
 ActiveRecord::Base.logger = Delayed::Worker.logger
@@ -71,7 +68,7 @@ class Story < ActiveRecord::Base
   end
   default_scope { where(:scoped => true) }
 
-  handle_asynchronously :whatever
+  # handle_asynchronously :whatever
 end
 
 RSpec.configure do |config|

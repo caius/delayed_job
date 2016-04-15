@@ -5,6 +5,8 @@ describe Delayed::Backend::Test::Job do
 
   describe '#reload' do
     it 'causes the payload object to be reloaded' do
+      pending "ignoring specs using delay"
+
       job = 'foo'.delay.length
       o = job.payload_object
       expect(o.object_id).not_to eq(job.reload.payload_object.object_id)
